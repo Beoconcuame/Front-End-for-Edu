@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Verified Page</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+      }
+      .email-verified-page {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+      }
+      .email-verified-page__background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        object-fit: cover;
+        z-index: -10;
+      }
+      .email-verified-page__carousel-container {
+        width: 50%;
+        height: 80vh;
+        max-height: 80vh;
+        padding: 100px 10px 20px;
+        color: black;
+        background-color: #f1f5f9;
+        border-radius: 40px;
+        border: 2px solid #c28282;
+        overflow: hidden;
+        position: relative;
+      }
+      .email-verified-page__slide {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+      .email-verified-page__title {
+        font-size: 1.875rem;
+        text-align: center;
+      }
+      .email-verified-page__input-container,
+      .email-verified-page__goal-input-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        border-radius: 24px;
+        border: 2px solid #2642a5;
+        box-shadow: 2px 2px 1px 2px #2642a5;
+        width: 80%;
+      }
+      .email-verified-page__goal-input-container {
+        background-color: #cccdee;
+        width: 91.666667%;
+      }
+      .email-verified-page__icon {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        right: 12px;
+      }
+      .email-verified-page__input,
+      .email-verified-page__goal-input {
+        padding-left: 12px;
+        padding-right: 32px;
+        border: none;
+        width: 100%;
+        background-color: transparent;
+        height: 32px;
+      }
+      .email-verified-page__goal-input {
+        height: 56px;
+        font-size: 1.5rem;
+      }
+      .email-verified-page__label {
+        position: absolute;
+        left: 16px;
+        font-size: 1.5rem;
+      }
+      .carousel__arrow {
+        position: absolute;
+        bottom: 10%;
+        z-index: 10;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      .carousel__arrow--left {
+        left: 10%;
+      }
+      .carousel__arrow--right {
+        right: 10%;
+      }
+      .rotate-180 {
+        transform: rotate(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-verified-page">
+      <img
+        src="./assets/background.svg"
+        alt="background"
+        class="email-verified-page__background-image"
+      />
+      <div class="email-verified-page__carousel-container">
+        <div class="carousel">
+          <div class="email-verified-page__slide">
+            <h1 class="email-verified-page__title">Chọn khối bạn quan tâm?</h1>
+            <div class="email-verified-page__input-container">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="email-verified-page__icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                />
+              </svg>
+              <input type="text" class="email-verified-page__input" />
+            </div>
+          </div>
+          <div class="email-verified-page__slide">
+            <h1 class="email-verified-page__title">Chọn ngành bạn quan tâm?</h1>
+            <div class="email-verified-page__input-container">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="email-verified-page__icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                />
+              </svg>
+              <input type="text" class="email-verified-page__input" />
+            </div>
+          </div>
+          <div class="email-verified-page__slide">
+            <h1 class="email-verified-page__title">
+              Chọn trường bạn quan tâm?
+            </h1>
+            <div class="email-verified-page__input-container">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="email-verified-page__icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                />
+              </svg>
+              <input type="text" class="email-verified-page__input" />
+            </div>
+          </div>
+          <div class="email-verified-page__slide">
+            <h1 class="email-verified-page__title">Mục tiêu</h1>
+            <div class="email-verified-page__goal-input-container">
+              <label for="university" class="email-verified-page__label"
+                >Trường:</label
+              >
+              <input
+                type="text"
+                id="university"
+                class="email-verified-page__goal-input"
+              />
+            </div>
+            <div class="email-verified-page__goal-input-container">
+              <label for="major" class="email-verified-page__label"
+                >Ngành:</label
+              >
+              <input
+                type="text"
+                id="major"
+                class="email-verified-page__goal-input"
+              />
+            </div>
+            <div class="email-verified-page__goal-input-container">
+              <label for="score" class="email-verified-page__label"
+                >Điểm:</label
+              >
+              <input
+                type="text"
+                id="score"
+                class="email-verified-page__goal-input"
+              />
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel__arrow carousel__arrow--left"
+          onclick="prevSlide()"
+        >
+          <img src="./assets/left-arrow-slider.svg" alt="left arrow" />
+        </button>
+        <button
+          class="carousel__arrow carousel__arrow--right"
+          onclick="nextSlide()"
+        >
+          <img
+            src="./assets/left-arrow-slider.svg"
+            alt="right arrow"
+            class="rotate-180"
+          />
+        </button>
+      </div>
+    </div>
+    <script>
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".email-verified-page__slide");
+      const totalSlides = slides.length;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.style.display = i === index ? "flex" : "none";
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        showSlide(currentSlide);
+      });
+    </script>
+  </body>
+</html>
