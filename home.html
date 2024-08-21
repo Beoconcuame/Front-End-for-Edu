@@ -34,6 +34,7 @@
         gap: 0;
         width: 100%;
         height: 100%;
+        overflow-y: auto;
       }
       .background-image {
         position: absolute;
@@ -47,7 +48,6 @@
       .panel {
         flex-basis: 25%;
         padding: 1rem;
-        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -122,8 +122,7 @@
         }
       }
       .panel__to-do {
-        height: 100%;
-        overflow: hidden;
+        height: 400px;
       }
       .panel__to-do__container {
         height: 100%;
@@ -220,13 +219,14 @@
       }
       .subject-item {
         background-color: #1976d2d8;
-        padding: 0.6rem 1rem;
+        padding: 0 1rem;
         border-radius: 40px;
         display: flex;
         justify-content: space-evenly;
-        min-width: 200px;
+        align-items: center;
+        min-width: 180px;
         .subject-item__name {
-          color: black;
+          color: white;
           font-size: 2em;
           font-weight: 500;
         }
@@ -240,6 +240,12 @@
         align-items: center;
         min-height: 300px;
         box-shadow: 2px 2px 4px 2px darkcyan;
+        padding-left: 32px;
+        .circular-progress-bar--general,
+        .chart--general {
+          width: 45%;
+          padding: 0.5rem;
+        }
       }
       .encouragement-container {
         width: 75%;
@@ -260,6 +266,68 @@
       }
       button:hover {
         opacity: 0.6;
+      }
+
+      .progess-group {
+        background-color: transparent;
+        width: 90px;
+        padding: 15px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+      }
+
+      .circular-progress {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: 0.8s;
+      }
+
+      .circular-progress::before {
+        content: "";
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #1976d2d8;
+      }
+      .subject-value {
+        position: relative;
+        color: white;
+        font-size: 20px;
+        font-weight: 200;
+      }
+      .text {
+        display: none;
+      }
+      .circular-progress-bar--general {
+        .progess-group {
+          width: 360px;
+          padding: 15px 0;
+        }
+
+        .circular-progress {
+          height: 240px;
+          width: 240px;
+        }
+
+        .circular-progress::before {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, 0.859);
+        }
+        .subject-value {
+          font-size: 60px;
+          font-weight: bold;
+          color: black;
+        }
       }
     </style>
   </head>
@@ -375,19 +443,22 @@
         <div class="subjects">
           <div class="subject-item">
             <p class="subject-item__name">Toán</p>
-            <div class="circular-progress"></div>
+            <div class="circular-progress-bar--math"></div>
           </div>
           <div class="subject-item">
             <p class="subject-item__name">Lý</p>
-            <div class="circular-progress"></div>
+            <div class="circular-progress-bar--physics"></div>
           </div>
           <div class="subject-item">
             <p class="subject-item__name">Hóa</p>
-            <div class="circular-progress"></div>
+            <div class="circular-progress-bar--chemistry"></div>
           </div>
         </div>
         <div class="charts-container">
-          <div class="circular-progress"></div>
+          <div class="chart--general">
+            <canvas id="generalChart"></canvas>
+          </div>
+          <div class="circular-progress-bar--general"></div>
         </div>
         <div class="encouragement-container">
           <p class="encouragement__content">
@@ -396,7 +467,7 @@
         </div>
       </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const calendarDaysContainer = document.querySelector(".calendar-days");
@@ -406,7 +477,7 @@
         const daysToShow = 7;
         const today = new Date();
 
-        // pass data to studiedDays, format: yyyy-mm-dd
+        // TODO: ASSIGN DATA TO CONST STUDIEDDAYS, FORMAT: [new Date("yyyy-mm-dd"), new Date("yyyy-mm-dd"), ...]
         const studiedDays = [
           new Date("2024-08-20"),
           new Date("2024-08-18"),
@@ -430,9 +501,8 @@
           return `${day}/${month}`;
         }
 
-        // Function to create calendar days
         function createCalendarDays(startDate) {
-          calendarDaysContainer.innerHTML = ""; // Clear existing days
+          calendarDaysContainer.innerHTML = "";
           for (let i = 0; i < daysToShow; i++) {
             const dayDiv = document.createElement("div");
             dayDiv.classList.add("calendar-day");
@@ -450,12 +520,10 @@
             dayDiv.appendChild(img);
             calendarDaysContainer.appendChild(dayDiv);
 
-            // Move to the next day
             startDate.setDate(startDate.getDate() + 1);
           }
         }
 
-        // Event listeners for navigation buttons
         prevButton.addEventListener("click", function () {
           startDate.setDate(startDate.getDate() - 1);
           createCalendarDays(new Date(startDate));
@@ -470,8 +538,92 @@
           }
         });
 
-        // Create initial calendar days
         createCalendarDays(new Date(startDate));
+
+        // TODO: ASSIGN DATA TO CONST SUBJECTS, FORMAT: {name: "subjectName", percent: 0-100}
+        const subjects = [
+          { name: "math", percent: 65, color: "#78e08f" },
+          { name: "physics", percent: 45, color: "#f0932b" },
+          { name: "chemistry", percent: 75, color: "#78e08f" },
+          { name: "general", percent: 85, color: "#78e08f" },
+        ];
+
+        subjects.forEach((subject) => {
+          // define color o day ne`
+          if (subject.percent < 25) {
+            subject.color = "#eb4d4b";
+          } else if (subject.percent < 50) {
+            subject.color = "#f0932b";
+          } else if (subject.percent < 75) {
+            subject.color = "#f9ca24";
+          } else {
+            subject.color = "#78e08f";
+          }
+          let container = document.querySelector(
+            `.circular-progress-bar--${subject.name}`
+          );
+          container.innerHTML += `
+        <div class="progess-group">
+        <div class="circular-progress" >
+          <span class="subject-value">0%</span>
+        </div>
+      </div>
+        `;
+        });
+
+        //style="  background: conic-gradient(${subject.color} ${3.6 * subject.percent}deg, #fff 0deg);"
+
+        const progressGroups = document.querySelectorAll(".progess-group");
+
+        progressGroups.forEach((progress, index) => {
+          let progressStartValue = 0;
+          let progressStartEnd = subjects[index].percent;
+          let speed = 10;
+          let progessTimer = setInterval(() => {
+            progressStartValue++;
+            if (progressStartValue == progressStartEnd) {
+              clearInterval(progessTimer);
+            }
+            progress.querySelector(".circular-progress").style.background = `
+          conic-gradient(${subjects[index].color} ${
+              3.6 * progressStartValue
+            }deg, #fff 0deg)`;
+
+            progress.querySelector(".subject-value").innerHTML =
+              progressStartValue + "%";
+          }, speed);
+        });
+
+        // Initialize chart--general
+        const ctx = document.getElementById("generalChart").getContext("2d");
+
+        // TODO: ASSIGN DATA
+        // row
+        const labels = ["1", "2", "3", "4", "5", "6", "7"];
+        // data theo tung` thang
+        const data = [80, 40, 100, 90, 60, 70, 80];
+        const generalChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Mức độ hoàn thành",
+                data: data,
+                fill: false,
+                borderColor: "rgb(255, 61, 0)",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
       });
     </script>
   </body>
