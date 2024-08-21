@@ -23,6 +23,7 @@
         right: 0;
         bottom: 0;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         background-color: white;
@@ -38,6 +39,118 @@
         object-fit: cover;
         z-index: -10;
       }
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.6;
+      }
+      .button--back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+      }
+      .header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.815);
+        height: 12vh;
+        box-shadow: 0 0 4px 1px black;
+      }
+      .button__analytics,
+      .button__review,
+      .button__progress {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        align-items: center;
+        padding: 0.8rem 1rem;
+        background-color: #4caf50;
+        border-radius: 35px;
+        color: white;
+        font-size: 1.6em;
+        font-weight: 600;
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+      .button__review {
+        background-color: #ffc107;
+        color: black;
+      }
+      .button__progress {
+        background-color: #1976d2;
+        font-size: 2em;
+      }
+
+      .information {
+        margin-top: 64px;
+        margin-bottom: 32px;
+        width: 90%;
+        background-color: white;
+        padding: 16px;
+        border-radius: 16px;
+        box-shadow: 1px 1px 4px 1px black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        padding-top: 48px;
+        max-height: 70%;
+      }
+      .encouragement {
+        display: flex;
+        gap: 0.5rem;
+        font-size: 1.2em;
+        margin-bottom: 16px;
+      }
+      .chapters-container {
+        padding-top: 16px;
+        padding-left: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+        width: 100%;
+        overflow-y: auto;
+      }
+      .chapter {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        width: 100%;
+        .chapter__button {
+          width: 90%;
+          background-color: #ffc107;
+          padding: 1rem;
+          border-radius: 24px;
+        }
+      }
+      .buttons-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+        .practice-button,
+        .test-button {
+          padding: 1rem 2rem;
+          font-size: 1.5em;
+          color: white;
+          background-color: #1976d2;
+          border-radius: 30px;
+          width: 20%;
+          min-width: fit-content;
+        }
+      }
     </style>
   </head>
   <body>
@@ -48,30 +161,69 @@
         class="background-image"
       />
       <div class="header">
-        <button class="button--back"></button>
+        <button class="button--back">
+          <img src="/assets/left-arrow-slider.svg" />
+        </button>
         <div class="button button__analytics">
-          <p>Analytics</p>
-          <img src="" alt="analytics" />
+          <p>Đánh giá</p>
+          <img src="/assets/analytics-icon.svg" alt="analytics" />
         </div>
         <div class="button button__progress">
-          <p>Analytics</p>
+          <p class="header__subject">Toán</p>
           <!-- circular progress -->
+          <div class="circular-progress-bar__container"></div>
         </div>
         <div class="button button__review">
           <p>Analytics</p>
-          <img src="" alt="review" />
+          <img src="/assets/question-icon.svg" alt="review" />
         </div>
       </div>
       <div class="information">
         <!-- progress bar -->
         <div class="encouragement">
-          <img src="" alt="encouragement" />
+          <img src="/assets/encouragement-icon.svg" alt="encouragement" />
           <p>Hãy làm bài kiểm tra tổng kết để xác nhận bạn có trình</p>
         </div>
         <h2 class="chapters-container__title">Bài kiểm tra chương</h2>
 
         <div class="chapters-container">
           <!-- chapterList.map... o day ne, moi chapter la mot div.chapter -->
+          <div class="chapter">
+            <div class="chapter__button">
+              <p>Chương 1</p>
+            </div>
+            <!-- circular progress -->
+          </div>
+          <div class="chapter">
+            <div class="chapter__button">
+              <p>Chương 1</p>
+            </div>
+            <!-- circular progress -->
+          </div>
+          <div class="chapter">
+            <div class="chapter__button">
+              <p>Chương 1</p>
+            </div>
+            <!-- circular progress -->
+          </div>
+          <div class="chapter">
+            <div class="chapter__button">
+              <p>Chương 1</p>
+            </div>
+            <!-- circular progress -->
+          </div>
+          <div class="chapter">
+            <div class="chapter__button">
+              <p>Chương 1</p>
+            </div>
+            <!-- circular progress -->
+          </div>
+          <div class="chapter">
+            <div class="chapter__button">
+              <p>Chương 1</p>
+            </div>
+            <!-- circular progress -->
+          </div>
           <div class="chapter">
             <div class="chapter__button">
               <p>Chương 1</p>
