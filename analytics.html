@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        display: flex;
+      }
+      .analytics-page {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+      }
+      .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        object-fit: cover;
+        z-index: -10;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="analytics-page">
+      <img
+        src="./assets/background.svg"
+        alt="background"
+        class="background-image"
+      />
+      <div class="container">
+        <button class="button--back"></button>
+        <div class="header">
+          <p class="header__subject">Toán</p>
+          <!-- circular progress -->
+        </div>
+      </div>
+      <div class="feedback__container">
+        <p class="feedback__content">Bạn đang không đạt tiến độ hãy học thêm</p>
+      </div>
+      <div class="charts__container">
+        <!-- chart -->
+      </div>
+    </div>
+  </body>
+</html>

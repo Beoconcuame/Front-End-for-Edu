@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        display: flex;
+      }
+      .subject-page {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+      }
+      .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        object-fit: cover;
+        z-index: -10;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="subject-page">
+      <img
+        src="./assets/background.svg"
+        alt="background"
+        class="background-image"
+      />
+      <div class="header">
+        <button class="button--back"></button>
+        <div class="button button__analytics">
+          <p>Analytics</p>
+          <img src="" alt="analytics" />
+        </div>
+        <div class="button button__progress">
+          <p>Analytics</p>
+          <!-- circular progress -->
+        </div>
+        <div class="button button__review">
+          <p>Analytics</p>
+          <img src="" alt="review" />
+        </div>
+      </div>
+      <div class="information">
+        <!-- progress bar -->
+        <div class="encouragement">
+          <img src="" alt="encouragement" />
+          <p>Hãy làm bài kiểm tra tổng kết để xác nhận bạn có trình</p>
+        </div>
+        <h2 class="chapters-container__title">Bài kiểm tra chương</h2>
+
+        <div class="chapters-container">
+          <!-- chapterList.map... o day ne, moi chapter la mot div.chapter -->
+          <div class="chapter">
+            <div class="chapter__button">
+              <p>Chương 1</p>
+            </div>
+            <!-- circular progress -->
+          </div>
+        </div>
+      </div>
+      <div class="buttons-container">
+        <button class="practice-button">Sợ thì luyện thêm</button>
+        <button class="test-button">Test Trình đi</button>
+      </div>
+    </div>
+  </body>
+</html>

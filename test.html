@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        display: flex;
+      }
+      .test-page {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-page">
+      <button class="button--back"></button>
+      <div class="countdown">
+        <p>Còn lại <span class="time">2:00:00</span></p>
+      </div>
+      <div class="header">
+        <p>Bài kiểm tra tổng</p>
+      </div>
+      <div class="current-question__container">
+        <img src="" alt="question-icon" />
+        <p class="current-question__content">Câu 1: 1 + 1 bằng mấy?</p>
+        <div class="current-question__options-container">
+          <div class="current-question__option option--A">
+            <input type="radio" name="option" id="option-A" />
+            <label for="option-A">A</label>
+            <p class="option__content option__content--A">2</p>
+          </div>
+          <div class="current-question__option option--B">
+            <input type="radio" name="option" id="option-B" />
+            <label for="option-B">B</label>
+            <p class="option__content option__content--B">2</p>
+          </div>
+          <div class="current-question__option option--C">
+            <input type="radio" name="option" id="option-C" />
+            <label for="option-C">C</label>
+            <p class="option__content option__content--C">2</p>
+          </div>
+          <div class="current-question__option option--D">
+            <input type="radio" name="option" id="option-D" />
+            <label for="option-D">D</label>
+            <p class="option__content option__content--D">2</p>
+          </div>
+        </div>
+      </div>
+      <div class="questions-list__container">
+        <!-- questionList.map() -> -->
+        <div class="question__item">
+          <input type="radio" name="questionItem" id="question-1" />
+          <label for="question-1">1</label>
+        </div>
+      </div>
+      <button class="button button--submit">SUBMIT</button>
+    </div>
+  </body>
+</html>
