@@ -16,13 +16,14 @@
         height: 100%;
         display: flex;
       }
-      .chapter-history-page {
+      .test-history-page {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         background-color: white;
@@ -38,30 +39,246 @@
         object-fit: cover;
         z-index: -10;
       }
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.6;
+      }
+      .button--back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+      }
+
+      .information {
+        width: 90%;
+        background-color: white;
+        padding: 16px;
+        border-radius: 16px;
+        box-shadow: 1px 1px 4px 1px black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        padding-top: 48px;
+        max-height: 95%;
+        min-height: 90%;
+      }
+      .title {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-bottom: 16px;
+        background-color: #1976d2;
+        padding: 1rem;
+        color: white;
+        border-radius: 16px;
+      }
+      .tests-container {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+        overflow-y: auto;
+        border: 1px solid #727272;
+        box-shadow: inset 0px 0px 5px 0px #4a4a4a;
+        border-radius: 20px;
+        height: 80%;
+      }
+      .test {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        width: 100%;
+      }
+      .test__button {
+        width: 90%;
+        background-color: #ffc107;
+        padding: 1rem;
+        border-radius: 24px;
+        p {
+          font-size: 1.2rem;
+          font-weight: 500;
+        }
+      }
+
+      .progess-group {
+        background-color: transparent;
+        width: 90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+      }
+
+      .circular-progress {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: 0.8s;
+      }
+
+      .circular-progress::before {
+        content: "";
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #1976d2d8;
+      }
+      .test-value {
+        position: relative;
+        color: white;
+        font-size: 20px;
+        font-weight: 200;
+      }
+      .text {
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <div class="chapter-history-page">
+    <div class="test-history-page">
       <img
         src="./assets/background.svg"
         alt="background"
         class="background-image"
       />
-      <div class="container">
-        <button class="button--back"></button>
-        <div class="header">
+
+      <div class="information">
+        <button class="button--back">
+          <img src="/assets/left-arrow-slider.svg" />
+        </button>
+        <!-- progress bar -->
+        <div class="title">
           <p>Lịch sử làm bài</p>
         </div>
-        <div class="history__container">
-          <!-- testList.map() -> -->
-          <div class="test__item">
-            <div class="test__item__button">
-              <p class="test__item__info">Kiểm tra tổng lúc 9h35p 9/5/2023</p>
+
+        <div class="tests-container">
+          <!-- testList.map... o day ne, moi test la mot div.test -->
+          <div class="test">
+            <div class="test__button">
+              <p>Chương 1</p>
             </div>
-            <!-- circular progess -->
+            <div class="circular-progress-bar--test1"></div>
+          </div>
+          <div class="test">
+            <div class="test__button">
+              <p>Chương 2</p>
+            </div>
+            <div class="circular-progress-bar--test2"></div>
+          </div>
+          <div class="test">
+            <div class="test__button">
+              <p>Chương 3</p>
+            </div>
+            <div class="circular-progress-bar--test3"></div>
+          </div>
+          <div class="test">
+            <div class="test__button">
+              <p>Chương 4</p>
+            </div>
+            <div class="circular-progress-bar--test4"></div>
           </div>
         </div>
       </div>
     </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // TODO: assign data from backend here, format like below
+      const tests = [
+        {
+          name: "test1",
+          percent: 45,
+          color: "#f0932b",
+          title: "Kiểm tra tổng lúc 9h35p 9/5/2023",
+        },
+        {
+          name: "test2",
+          percent: 75,
+          color: "#78e08f",
+          title: "Kiểm tra chương 1 lúc 10h35p 9/5/2023",
+        },
+        {
+          name: "test3",
+          percent: 85,
+          color: "#78e08f",
+          title: "Kiểm tra chương 1 lúc 10h35p 9/5/2023",
+        },
+        {
+          name: "test4",
+          percent: 85,
+          color: "#78e08f",
+          title: "Kiểm tra chương 1 lúc 10h35p 9/5/2023",
+        },
+      ];
+      const testButtons = document.querySelectorAll(".test__button");
+      testButtons.forEach((button, index) => {
+        button.querySelector("p").textContent = tests[index].title;
+        // TODO: button.addEventListener("click", () => {
+        if (tests[index].percent < 25) {
+          button.style.backgroundColor = "#eb4d4b";
+        } else if (tests[index].percent < 50) {
+          button.style.backgroundColor = "#f0932b";
+        } else if (tests[index].percent < 75) {
+          button.style.backgroundColor = "#f9ca24";
+        } else {
+          button.style.backgroundColor = "#78e08f";
+        }
+      });
+      tests.forEach((test) => {
+        // define color o day ne`
+        if (test.percent < 25) {
+          test.color = "#eb4d4b";
+        } else if (test.percent < 50) {
+          test.color = "#f0932b";
+        } else if (test.percent < 75) {
+          test.color = "#f9ca24";
+        } else {
+          test.color = "#78e08f";
+        }
+        let container = document.querySelector(
+          `.circular-progress-bar--${test.name}`
+        );
+        container.innerHTML += `
+        <div class="progess-group">
+        <div class="circular-progress" >
+          <span class="test-value">0%</span>
+        </div>
+      </div>
+        `;
+      });
+      const progressGroups = document.querySelectorAll(".progess-group");
+
+      progressGroups.forEach((progress, index) => {
+        let progressStartValue = 0;
+        let progressStartEnd = tests[index].percent;
+        let speed = 10;
+        let progessTimer = setInterval(() => {
+          progressStartValue++;
+          if (progressStartValue == progressStartEnd) {
+            clearInterval(progessTimer);
+          }
+          progress.querySelector(".circular-progress").style.background = `
+  conic-gradient(${tests[index].color} ${
+            3.6 * progressStartValue
+          }deg, #fff 0deg)`;
+
+          progress.querySelector(".test-value").innerHTML =
+            progressStartValue + "%";
+        }, speed);
+      });
+    });
+  </script>
 </html>
