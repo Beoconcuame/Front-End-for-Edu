@@ -350,118 +350,120 @@
         </div>
       </div>
     </div>
-  </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let progressBar = { percent: 40, color: "" };
-      if (progressBar.percent < 25) {
-        progressBar.color = "#eb4d4b";
-      } else if (progressBar.percent < 50) {
-        progressBar.color = "#f0932b";
-      } else if (progressBar.percent < 75) {
-        progressBar.color = "#f9ca24";
-      } else {
-        progressBar.color = "#78e08f";
-      }
-      let container = document.querySelector(".circular-progress-bar");
-      container.innerHTML += `
-        <div class="progress-group">
-        <div class="circular-progress" >
-          <span class="subject-value">0%</span>
-        </div>
-      </div>
-        `;
-      let progressGroup = document.querySelector(".progress-group");
-      let progressStartValue = 0;
-      let progressEndValue = progressBar.percent;
-      let speed = 10;
-      let progressTimer = setInterval(() => {
-        progressStartValue++;
-        if (progressStartValue == progressEndValue) {
-          clearInterval(progressTimer);
-        }
-        progressGroup.querySelector(".circular-progress").style.background = `
-          conic-gradient(${progressBar.color} ${
-          3.6 * progressStartValue
-        }deg, #fff 0deg)`;
-
-        progressGroup.querySelector(".subject-value").innerHTML =
-          progressStartValue + "%";
-      }, speed);
-
-      // TODO: assign real data to const data and questionsCorrect, format like below
-      const data = [
-        {
-          question: "Câu 1: Nội dung câu hỏi 1",
-          options: ["A", "B", "C", "D"],
-          optionChoosed: "A",
-          optionCorrect: "B",
-          explain: "Giải thích: Nội dung giải thích 1",
-        },
-        {
-          question: "Câu 2: Nội dung câu hỏi 2",
-          options: ["A", "B", "C", "D"],
-          optionChoosed: "A",
-          optionCorrect: "A",
-          explain: "Giải thích: Nội dung giải thích 2",
-        },
-      ];
-
-      const questionsCorrect = [2, 3, 4, 6];
-
-      const questionItems = document.querySelectorAll(".question__item input");
-      const currentQuestionContent = document.querySelector(
-        ".current-question__content"
-      );
-      const currentQuestionExplain = document.querySelector(
-        ".current-question__explain p"
-      );
-      const currentQuestionOptions = document.querySelectorAll(
-        ".current-question__option"
-      );
-
-      questionItems.forEach((item) => {
-        const questionNumber = parseInt(item.nextElementSibling.textContent);
-        if (questionsCorrect.includes(questionNumber)) {
-          item.nextElementSibling.classList.add("correct-question");
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let progressBar = { percent: 40, color: "" };
+        if (progressBar.percent < 25) {
+          progressBar.color = "#eb4d4b";
+        } else if (progressBar.percent < 50) {
+          progressBar.color = "#f0932b";
+        } else if (progressBar.percent < 75) {
+          progressBar.color = "#f9ca24";
         } else {
-          item.nextElementSibling.classList.add("incorrect-question");
+          progressBar.color = "#78e08f";
         }
-        item.addEventListener("change", function () {
-          const questionNumber = this.nextElementSibling.textContent;
-          const questionData = data[questionNumber - 1];
-          currentQuestionContent.textContent = questionData.question;
-          currentQuestionExplain.textContent = questionData.explain;
+        let container = document.querySelector(".circular-progress-bar");
+        container.innerHTML += `
+          <div class="progress-group">
+          <div class="circular-progress" >
+            <span class="subject-value">0%</span>
+          </div>
+        </div>
+          `;
+        let progressGroup = document.querySelector(".progress-group");
+        let progressStartValue = 0;
+        let progressEndValue = progressBar.percent;
+        let speed = 10;
+        let progressTimer = setInterval(() => {
+          progressStartValue++;
+          if (progressStartValue == progressEndValue) {
+            clearInterval(progressTimer);
+          }
+          progressGroup.querySelector(".circular-progress").style.background = `
+            conic-gradient(${progressBar.color} ${
+            3.6 * progressStartValue
+          }deg, #fff 0deg)`;
 
-          questionData.options.forEach((option, index) => {
-            const optionElement = currentQuestionOptions[index];
-            const label = optionElement.querySelector("label");
-            const p = optionElement.querySelector("p");
-            label.textContent = option;
-            p.textContent = option;
+          progressGroup.querySelector(".subject-value").innerHTML =
+            progressStartValue + "%";
+        }, speed);
 
-            // Reset classes
-            label.classList.remove("correct", "incorrect");
+        // TODO: assign real data to const data and questionsCorrect, format like below
+        const data = [
+          {
+            question: "Câu 1: Nội dung câu hỏi 1",
+            options: ["A", "B", "C", "D"],
+            optionChoosed: "A",
+            optionCorrect: "B",
+            explain: "Giải thích: Nội dung giải thích 1",
+          },
+          {
+            question: "Câu 2: Nội dung câu hỏi 2",
+            options: ["A", "B", "C", "D"],
+            optionChoosed: "A",
+            optionCorrect: "A",
+            explain: "Giải thích: Nội dung giải thích 2",
+          },
+        ];
 
-            // Add classes based on optionChoosed and optionCorrect
-            if (option === questionData.optionCorrect) {
-              label.classList.add("correct");
-            }
-            if (
-              option === questionData.optionChoosed &&
-              option !== questionData.optionCorrect
-            ) {
-              label.classList.add("incorrect");
-            }
+        const questionsCorrect = [2, 3, 4, 6];
+
+        const questionItems = document.querySelectorAll(
+          ".question__item input"
+        );
+        const currentQuestionContent = document.querySelector(
+          ".current-question__content"
+        );
+        const currentQuestionExplain = document.querySelector(
+          ".current-question__explain p"
+        );
+        const currentQuestionOptions = document.querySelectorAll(
+          ".current-question__option"
+        );
+
+        questionItems.forEach((item) => {
+          const questionNumber = parseInt(item.nextElementSibling.textContent);
+          if (questionsCorrect.includes(questionNumber)) {
+            item.nextElementSibling.classList.add("correct-question");
+          } else {
+            item.nextElementSibling.classList.add("incorrect-question");
+          }
+          item.addEventListener("change", function () {
+            const questionNumber = this.nextElementSibling.textContent;
+            const questionData = data[questionNumber - 1];
+            currentQuestionContent.textContent = questionData.question;
+            currentQuestionExplain.textContent = questionData.explain;
+
+            questionData.options.forEach((option, index) => {
+              const optionElement = currentQuestionOptions[index];
+              const label = optionElement.querySelector("label");
+              const p = optionElement.querySelector("p");
+              label.textContent = option;
+              p.textContent = option;
+
+              // Reset classes
+              label.classList.remove("correct", "incorrect");
+
+              // Add classes based on optionChoosed and optionCorrect
+              if (option === questionData.optionCorrect) {
+                label.classList.add("correct");
+              }
+              if (
+                option === questionData.optionChoosed &&
+                option !== questionData.optionCorrect
+              ) {
+                label.classList.add("incorrect");
+              }
+            });
           });
         });
+        if (questionItems.length > 0) {
+          questionItems[0].checked = true;
+          questionItems[0].dispatchEvent(new Event("change"));
+        }
       });
-      if (questionItems.length > 0) {
-        questionItems[0].checked = true;
-        questionItems[0].dispatchEvent(new Event("change"));
-      }
-    });
-  </script>
+    </script>
+  </body>
 </html>
 <!-- <div class="result__container">
        

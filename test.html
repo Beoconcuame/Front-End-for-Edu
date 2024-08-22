@@ -270,76 +270,78 @@
       </div>
       <button class="button button--submit">SUBMIT</button>
     </div>
-  </body>
-  <script>
-    // TODO: set timeout for countdown span
-    document.addEventListener("DOMContentLoaded", function () {
-      function startCountdown(duration, display) {
-        let timer = duration,
-          hours,
-          minutes,
-          seconds;
-        setInterval(function () {
-          hours = parseInt(timer / 3600, 10);
-          minutes = parseInt((timer % 3600) / 60, 10);
-          seconds = parseInt(timer % 60, 10);
+    <script>
+      // TODO: set timeout for countdown span
+      document.addEventListener("DOMContentLoaded", function () {
+        function startCountdown(duration, display) {
+          let timer = duration,
+            hours,
+            minutes,
+            seconds;
+          setInterval(function () {
+            hours = parseInt(timer / 3600, 10);
+            minutes = parseInt((timer % 3600) / 60, 10);
+            seconds = parseInt(timer % 60, 10);
 
-          hours = hours < 10 ? "0" + hours : hours;
-          minutes = minutes < 10 ? "0" + minutes : minutes;
-          seconds = seconds < 10 ? "0" + seconds : seconds;
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
 
-          display.textContent = hours + ":" + minutes + ":" + seconds;
+            display.textContent = hours + ":" + minutes + ":" + seconds;
 
-          if (--timer < 0) {
-            clearInterval(interval);
-            // Countdown finished event
-            countdownFinished();
-          }
-        }, 1000);
-      }
-      function countdownFinished() {
-        // TODO: het gio lam bai
-      }
+            if (--timer < 0) {
+              clearInterval(interval);
+              // Countdown finished event
+              countdownFinished();
+            }
+          }, 1000);
+        }
+        function countdownFinished() {
+          // TODO: het gio lam bai
+        }
 
-      window.onload = function () {
-        const timeDisplay = document.querySelector(".time");
-        const twoHours = 60 * 60 * 2; // 2 hours in seconds
-        startCountdown(twoHours, timeDisplay);
-      };
+        window.onload = function () {
+          const timeDisplay = document.querySelector(".time");
+          const twoHours = 60 * 60 * 2; // 2 hours in seconds
+          startCountdown(twoHours, timeDisplay);
+        };
 
-      // TODO: update the current question content when click on question item
-      const data = [
-        {
-          question: "Câu 1: Nội dung câu hỏi 1",
-          options: ["A", "B", "C", "D"],
-        },
-        {
-          question: "Câu 2: Nội dung câu hỏi 2",
-          options: ["A", "B", "C", "D"],
-        },
-      ];
+        // TODO: update the current question content when click on question item
+        const data = [
+          {
+            question: "Câu 1: Nội dung câu hỏi 1",
+            options: ["A", "B", "C", "D"],
+          },
+          {
+            question: "Câu 2: Nội dung câu hỏi 2",
+            options: ["A", "B", "C", "D"],
+          },
+        ];
 
-      const questionItems = document.querySelectorAll(".question__item input");
-      const currentQuestionContent = document.querySelector(
-        ".current-question__content"
-      );
-      const currentQuestionOptions = document.querySelectorAll(
-        ".current-question__option"
-      );
+        const questionItems = document.querySelectorAll(
+          ".question__item input"
+        );
+        const currentQuestionContent = document.querySelector(
+          ".current-question__content"
+        );
+        const currentQuestionOptions = document.querySelectorAll(
+          ".current-question__option"
+        );
 
-      questionItems.forEach((item) => {
-        item.addEventListener("change", function () {
-          const questionNumber = this.nextElementSibling.textContent;
-          const questionData = data[questionNumber - 1];
-          currentQuestionContent.textContent = questionData.question;
+        questionItems.forEach((item) => {
+          item.addEventListener("change", function () {
+            const questionNumber = this.nextElementSibling.textContent;
+            const questionData = data[questionNumber - 1];
+            currentQuestionContent.textContent = questionData.question;
 
-          questionData.options.forEach((option, index) => {
-            const optionElement = currentQuestionOptions[index];
-            optionElement.querySelector("label").textContent = option;
-            optionElement.querySelector("p").textContent = option;
+            questionData.options.forEach((option, index) => {
+              const optionElement = currentQuestionOptions[index];
+              optionElement.querySelector("label").textContent = option;
+              optionElement.querySelector("p").textContent = option;
+            });
           });
         });
       });
-    });
-  </script>
+    </script>
+  </body>
 </html>
