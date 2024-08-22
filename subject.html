@@ -16,7 +16,7 @@
         height: 100%;
         display: flex;
       }
-      .subject-page {
+      .chapter-page {
         position: fixed;
         top: 0;
         left: 0;
@@ -62,7 +62,7 @@
         justify-content: space-evenly;
         align-items: center;
         background-color: rgba(255, 255, 255, 0.815);
-        height: 12vh;
+        height: 14vh;
         box-shadow: 0 0 4px 1px black;
       }
       .button__analytics,
@@ -106,6 +106,7 @@
         position: relative;
         padding-top: 48px;
         max-height: 70%;
+        min-height: 60%;
       }
       .encouragement {
         display: flex;
@@ -118,7 +119,8 @@
         padding-left: 16px;
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        justify-content: start;
+        gap: 8px;
         align-items: center;
         width: 100%;
         overflow-y: auto;
@@ -151,10 +153,47 @@
           min-width: fit-content;
         }
       }
+      .progess-group {
+        background-color: transparent;
+        width: 90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+      }
+
+      .circular-progress {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: 0.8s;
+      }
+
+      .circular-progress::before {
+        content: "";
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #1976d2d8;
+      }
+      .chapter-value {
+        position: relative;
+        color: white;
+        font-size: 20px;
+        font-weight: 200;
+      }
+      .text {
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <div class="subject-page">
+    <div class="chapter-page">
       <img
         src="./assets/background.svg"
         alt="background"
@@ -171,7 +210,7 @@
         <div class="button button__progress">
           <p class="header__subject">Toán</p>
           <!-- circular progress -->
-          <div class="circular-progress-bar__container"></div>
+          <div class="circular-progress-bar--subject"></div>
         </div>
         <div class="button button__review">
           <p>Analytics</p>
@@ -192,43 +231,25 @@
             <div class="chapter__button">
               <p>Chương 1</p>
             </div>
-            <!-- circular progress -->
+            <div class="circular-progress-bar--chapter1"></div>
           </div>
           <div class="chapter">
             <div class="chapter__button">
-              <p>Chương 1</p>
+              <p>Chương 2</p>
             </div>
-            <!-- circular progress -->
+            <div class="circular-progress-bar--chapter2"></div>
           </div>
           <div class="chapter">
             <div class="chapter__button">
-              <p>Chương 1</p>
+              <p>Chương 3</p>
             </div>
-            <!-- circular progress -->
+            <div class="circular-progress-bar--chapter3"></div>
           </div>
           <div class="chapter">
             <div class="chapter__button">
-              <p>Chương 1</p>
+              <p>Chương 4</p>
             </div>
-            <!-- circular progress -->
-          </div>
-          <div class="chapter">
-            <div class="chapter__button">
-              <p>Chương 1</p>
-            </div>
-            <!-- circular progress -->
-          </div>
-          <div class="chapter">
-            <div class="chapter__button">
-              <p>Chương 1</p>
-            </div>
-            <!-- circular progress -->
-          </div>
-          <div class="chapter">
-            <div class="chapter__button">
-              <p>Chương 1</p>
-            </div>
-            <!-- circular progress -->
+            <div class="circular-progress-bar--chapter4"></div>
           </div>
         </div>
       </div>
@@ -238,4 +259,70 @@
       </div>
     </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const chapters = [
+        { name: "subject", percent: 65, color: "#78e08f" },
+        { name: "chapter1", percent: 45, color: "#f0932b" },
+        { name: "chapter2", percent: 75, color: "#78e08f" },
+        { name: "chapter3", percent: 85, color: "#78e08f" },
+        { name: "chapter4", percent: 85, color: "#78e08f" },
+      ];
+      const chapterButtons = document.querySelectorAll(".chapter__button");
+      chapterButtons.forEach((button, index) => {
+        // TODO: button.addEventListener("click", () => {
+        if (chapters[index + 1].percent < 25) {
+          button.style.backgroundColor = "#eb4d4b";
+        } else if (chapters[index + 1].percent < 50) {
+          button.style.backgroundColor = "#f0932b";
+        } else if (chapters[index + 1].percent < 75) {
+          button.style.backgroundColor = "#f9ca24";
+        } else {
+          button.style.backgroundColor = "#78e08f";
+        }
+      });
+      chapters.forEach((chapter) => {
+        // define color o day ne`
+        if (chapter.percent < 25) {
+          chapter.color = "#eb4d4b";
+        } else if (chapter.percent < 50) {
+          chapter.color = "#f0932b";
+        } else if (chapter.percent < 75) {
+          chapter.color = "#f9ca24";
+        } else {
+          chapter.color = "#78e08f";
+        }
+        let container = document.querySelector(
+          `.circular-progress-bar--${chapter.name}`
+        );
+        container.innerHTML += `
+        <div class="progess-group">
+        <div class="circular-progress" >
+          <span class="chapter-value">0%</span>
+        </div>
+      </div>
+        `;
+      });
+      const progressGroups = document.querySelectorAll(".progess-group");
+
+      progressGroups.forEach((progress, index) => {
+        let progressStartValue = 0;
+        let progressStartEnd = chapters[index].percent;
+        let speed = 10;
+        let progessTimer = setInterval(() => {
+          progressStartValue++;
+          if (progressStartValue == progressStartEnd) {
+            clearInterval(progessTimer);
+          }
+          progress.querySelector(".circular-progress").style.background = `
+  conic-gradient(${chapters[index].color} ${
+            3.6 * progressStartValue
+          }deg, #fff 0deg)`;
+
+          progress.querySelector(".chapter-value").innerHTML =
+            progressStartValue + "%";
+        }, speed);
+      });
+    });
+  </script>
 </html>
