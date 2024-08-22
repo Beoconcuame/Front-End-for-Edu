@@ -38,6 +38,92 @@
         object-fit: cover;
         z-index: -10;
       }
+      .container {
+        width: 98%;
+        background-color: white;
+        padding: 16px;
+        border-radius: 16px;
+        box-shadow: inset 0px 0px 5px 0px #000000;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        height: 100%;
+        margin-top: 32px;
+        overflow: auto;
+      }
+      .button--back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        background-color: transparent;
+        border: none;
+      }
+      .header {
+        padding: 0.8rem 1.2rem;
+        background-color: #1976d2;
+        border-radius: 28px;
+        color: white;
+        font-size: 2.5em;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+      }
+      .encouragement__container {
+        padding: 0.8rem 1.2rem;
+        background-color: #ffc107;
+        border-radius: 20px;
+        color: black;
+        font-size: 2em;
+      }
+      .feedback__container,
+      .chart__container {
+        width: 80%;
+        background-color: white;
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow: inset 0px 0px 5px 0px #000000;
+        position: relative;
+        font-size: 1.2em;
+      }
+      .progess-group {
+        background-color: transparent;
+        width: 90px;
+        padding: 15px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+      }
+
+      .circular-progress {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: 0.8s;
+      }
+
+      .circular-progress::before {
+        content: "";
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: white;
+      }
+      .subject-value {
+        position: relative;
+        color: black;
+        font-size: 20px;
+        font-weight: 200;
+      }
     </style>
   </head>
   <body>
@@ -48,18 +134,178 @@
         class="background-image"
       />
       <div class="container">
-        <button class="button--back"></button>
+        <button class="button--back">
+          <img src="/assets/left-arrow-slider.svg" alt="back" />
+        </button>
         <div class="header">
           <p class="header__subject">Toán</p>
-          <!-- circular progress -->
+          <div class="circular-progress-bar"></div>
+        </div>
+        <div class="encouragement__container">
+          <p class="encouragement__content">
+            Bạn đang không đạt tiến độ hãy học thêm
+          </p>
+        </div>
+        <div class="chart__container chart__container--complete">
+          <canvas id="completeChart"></canvas>
+        </div>
+        <div class="chart__container chart__container--accurate">
+          <canvas id="accurateChart"></canvas>
+        </div>
+        <div class="feedback__container">
+          <p class="feedback__content">Bạn cần cải thiện môn này nhiều!</p>
         </div>
       </div>
-      <div class="feedback__container">
-        <p class="feedback__content">Bạn đang không đạt tiến độ hãy học thêm</p>
-      </div>
-      <div class="charts__container">
-        <!-- chart -->
-      </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const ctx1 = document.getElementById("completeChart").getContext("2d");
+        const ctx2 = document.getElementById("accurateChart").getContext("2d");
+
+        const timeLabels = ["1", "2", "3", "4", "5", "6"];
+        const levelLabels = [
+          "Nhận biết",
+          "Thông hiểu",
+          "Vận dụng",
+          "Vận dụng cao",
+        ];
+
+        const completeChart = new Chart(ctx1, {
+          type: "line",
+          data: {
+            labels: timeLabels,
+            datasets: [
+              {
+                label: "Biểu đồ % hoàn thành đối với môn Toán",
+                data: [90, 50, 68, 54, 40],
+                borderColor: "#1976d2",
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              legend: {
+                labels: {
+                  font: {
+                    size: 20,
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100, // Đặt giá trị tối đa của trục y là 100%
+                ticks: {
+                  callback: function (value) {
+                    return value + "%"; // Thêm ký hiệu % vào nhãn trục y
+                  },
+                  font: {
+                    size: 16, // Tăng cỡ chữ của trục y
+                  },
+                },
+              },
+              x: {
+                ticks: {
+                  font: {
+                    size: 16, // Tăng cỡ chữ của trục x
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        const accurateChart = new Chart(ctx2, {
+          type: "bar",
+          data: {
+            labels: levelLabels,
+            datasets: [
+              {
+                label: "Biểu đồ % chính xác theo độ khó",
+                data: [90, 50, 68, 54],
+                backgroundColor: [
+                  "rgba(255, 99, 132)",
+                  "rgba(54, 162, 235)",
+                  "rgba(255, 206, 86)",
+                  "rgba(75, 192, 192)",
+                ],
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              legend: {
+                labels: {
+                  font: {
+                    size: 20,
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100, // Đặt giá trị tối đa của trục y là 100%
+                ticks: {
+                  callback: function (value) {
+                    return value + "%"; // Thêm ký hiệu % vào nhãn trục y
+                  },
+                  font: {
+                    size: 16, // Tăng cỡ chữ của trục y
+                  },
+                },
+              },
+              x: {
+                ticks: {
+                  font: {
+                    size: 16, // Tăng cỡ chữ của trục x
+                  },
+                },
+              },
+            },
+          },
+        });
+        //TODO: assign real value to progressBar.percent
+        let progressBar = { percent: 40, color: "" };
+        if (progressBar.percent < 25) {
+          progressBar.color = "#eb4d4b";
+        } else if (progressBar.percent < 50) {
+          progressBar.color = "#f0932b";
+        } else if (progressBar.percent < 75) {
+          progressBar.color = "#f9ca24";
+        } else {
+          progressBar.color = "#78e08f";
+        }
+        let container = document.querySelector(".circular-progress-bar");
+        container.innerHTML += `
+          <div class="progress-group">
+          <div class="circular-progress" >
+            <span class="subject-value">0%</span>
+          </div>
+        </div>
+          `;
+        let progressGroup = document.querySelector(".progress-group");
+        let progressStartValue = 0;
+        let progressEndValue = progressBar.percent;
+        let speed = 10;
+        let progressTimer = setInterval(() => {
+          progressStartValue++;
+          if (progressStartValue == progressEndValue) {
+            clearInterval(progressTimer);
+          }
+          progressGroup.querySelector(".circular-progress").style.background = `
+            conic-gradient(${progressBar.color} ${
+            3.6 * progressStartValue
+          }deg, #fff 0deg)`;
+
+          progressGroup.querySelector(".subject-value").innerHTML =
+            progressStartValue + "%";
+        }, speed);
+      });
+    </script>
   </body>
 </html>
