@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        display: flex;
+      }
+      .home-page {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        background-color: white;
+        gap: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        object-fit: cover;
+        z-index: -10;
+      }
+      .panel {
+        flex-basis: 25%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        background-color: rgba(255, 255, 255, 0.84);
+        min-height: 100vh;
+        max-width: 25%;
+      }
+      .panel__button-group {
+        display: flex;
+        justify-content: flex-start;
+        gap: 0.8rem;
+        width: 100%;
+      }
+      .panel__user {
+        background-color: #1976d2;
+        opacity: 1;
+        border-radius: 40px;
+        width: 100%;
+        padding: 8px 16px;
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        .panel__user__image {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          position: absolute;
+          left: 16px;
+        }
+        .panel__user__content {
+          color: white;
+          font-size: 1.3em;
+          font-weight: 500;
+        }
+      }
+      .panel__target {
+        width: 100%;
+        padding: 1rem;
+        background-color: #1976d2;
+        border-radius: 30px;
+      }
+      .panel__target__container {
+        background-color: white;
+        padding: 0.8rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .panel__target__header,
+      .panel__to-do__header {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .panel__target__input-container {
+        display: flex;
+        align-items: center;
+        border-radius: 24px;
+        background-color: #cccdee;
+        padding: 0.5rem 1rem;
+        gap: 0.3rem;
+        input {
+          border: none;
+          background-color: transparent;
+          width: 100%;
+          height: 20px;
+        }
+        input:focus {
+          outline: none;
+        }
+      }
+
+      .dashboard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        width: 100%;
+        padding: 1rem;
+        padding-bottom: 1.5rem;
+      }
+
+      .subjects {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        width: 100%;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .subject-item {
+        background-color: #ff855f;
+        height: 70px;
+        width: 80%;
+        border-radius: 40px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .subject-item__name {
+          color: black;
+          font-size: 1.5em;
+          font-weight: 500;
+        }
+      }
+      .dashboard-main {
+        width: 90%;
+        background-color: rgba(255, 255, 255, 0.938);
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        min-height: 500px;
+        box-shadow: 2px 2px 4px 2px darkcyan;
+        padding: 32px;
+      }
+      .charts-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 100%;
+        width: 100%;
+        flex-basis: 45%;
+        gap: 1.5rem;
+      }
+      .panel__to-do {
+        height: 400px;
+        flex-basis: 50%;
+      }
+      .panel__to-do__container {
+        height: 100%;
+        max-height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .panel__to-do__table {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      .panel__to-do__table table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .panel__to-do__table th,
+      .panel__to-do__table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      .panel__to-do__table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      .encouragement-container {
+        width: 75%;
+        background-color: #47d2c1;
+        padding: 1.2rem 1rem;
+        border-radius: 30px;
+        box-shadow: 2px 2px 4px 2px darkcyan;
+        .encouragement__content {
+          color: white;
+          font-size: 1.5em;
+          font-weight: 500;
+          text-align: center;
+        }
+      }
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.6;
+      }
+
+      .progess-group {
+        background-color: transparent;
+        width: 90px;
+        padding: 15px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+      }
+
+      .circular-progress {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: 0.8s;
+      }
+
+      .circular-progress::before {
+        content: "";
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #ff855f;
+      }
+      .subject-value {
+        position: relative;
+        color: black;
+        font-size: 16px;
+        font-weight: 200;
+      }
+      .text {
+        display: none;
+      }
+      .circular-progress-bar--general {
+        .progess-group {
+          width: 240px;
+          padding: 8px 0;
+        }
+
+        .circular-progress {
+          height: 180px;
+          width: 180px;
+        }
+
+        .circular-progress::before {
+          width: 140px;
+          height: 140px;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, 0.971);
+        }
+        .subject-value {
+          font-size: 36px;
+          font-weight: bold;
+          color: black;
+        }
+      }
+      #generalChart {
+        width: 380px;
+        height: 240px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="home-page">
+      <img
+        src="./assets/background.svg"
+        alt="background"
+        class="background-image"
+      />
+
+      <div class="panel">
+        <div class="panel__button-group">
+          <button><img src="/assets/signout.svg" alt="sign-out" /></button>
+          <button><img src="/assets/settings.svg" alt="settings" /></button>
+        </div>
+        <div class="panel__user">
+          <img
+            src="/assets/user-avt.png"
+            alt="user"
+            class="panel__user__image"
+          />
+          <p class="panel__user__content">Hello user</p>
+        </div>
+        <div class="panel__target">
+          <div class="panel__target__container">
+            <div class="panel__target__header">
+              <img src="/assets/target.svg" alt="target" />
+              <h1 class="panel__target__title">Target</h1>
+            </div>
+            <div class="panel__target__input-container">
+              <label for="university" class="panel__target__label"
+                >Trường:</label
+              >
+              <input type="text" id="university" class="panel__target__input" />
+            </div>
+            <div class="panel__target__input-container">
+              <label for="major" class="panel__target__label">Ngành:</label>
+              <input type="text" id="major" class="panel__target__input" />
+            </div>
+            <div class="panel__target__input-container">
+              <label for="score" class="panel__target__label">Điểm:</label>
+              <input type="text" id="score" class="panel__target__input" />
+            </div>
+          </div>
+        </div>
+        <div class="subjects">
+          <div class="subject-item">
+            <p class="subject-item__name">Toán</p>
+            <div class="circular-progress-bar--math"></div>
+          </div>
+          <div class="subject-item">
+            <p class="subject-item__name">Lý</p>
+            <div class="circular-progress-bar--physics"></div>
+          </div>
+          <div class="subject-item">
+            <p class="subject-item__name">Hóa</p>
+            <div class="circular-progress-bar--chemistry"></div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard">
+        <div class="dashboard-main">
+          <div class="charts-container">
+            <div class="circular-progress-bar--general"></div>
+            <div class="chart--general">
+              <canvas id="generalChart"></canvas>
+            </div>
+          </div>
+          <div class="panel__to-do">
+            <div class="panel__to-do__container">
+              <div class="panel__to-do__header">
+                <img src="/assets/to-do.svg" alt="to-do" />
+                <h1 class="panel__to-do__title">To do list</h1>
+              </div>
+              <div class="panel__to-do__table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Date</th>
+                      <th>Tasks</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>28/08/2024</td>
+                      <td>Học lại bài 2 chương 2 đi thằng ngu</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>28/08/2024</td>
+                      <td>Học lại bài 2 chương 2 đi thằng ngu</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>28/08/2024</td>
+                      <td>
+                        Học lại bài 2 chương 2 đi thằng nguHọc lại bài 2 chương
+                        2 đi thằng nguHọc lại bài 2 chương 2 đi thằng ngu
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>28/08/2024</td>
+                      <td>
+                        Học lại bài 2 chương 2 đi thằng nguHọc lại bài 2 chương
+                        2 đi thằng nguHọc lại bài 2 chương 2 đi thằng ngu
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>28/08/2024</td>
+                      <td>
+                        Học lại bài 2 chương 2 đi thằng nguHọc lại bài 2 chương
+                        2 đi thằng nguHọc lại bài 2 chương 2 đi thằng ngu
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>28/08/2024</td>
+                      <td>
+                        Học lại bài 2 chương 2 đi thằng nguHọc lại bài 2 chương
+                        2 đi thằng nguHọc lại bài 2 chương 2 đi thằng ngu
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>28/08/2024</td>
+                      <td>
+                        Học lại bài 2 chương 2 đi thằng nguHọc lại bài 2 chương
+                        2 đi thằng nguHọc lại bài 2 chương 2 đi thằng ngu
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>28/08/2024</td>
+                      <td>
+                        Học lại bài 2 chương 2 đi thằng nguHọc lại bài 2 chương
+                        2 đi thằng nguHọc lại bài 2 chương 2 đi thằng ngu
+                      </td>
+                    </tr>
+                    <!-- them rows tuong tu -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="encouragement-container">
+          <p class="encouragement__content">
+            Làm tốt lắm bro chúng ta đang đi đúng tiến độ !
+          </p>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // TODO: ASSIGN DATA TO CONST SUBJECTS, FORMAT: {name: "subjectName", percent: 0-100}
+        const subjects = [
+          { name: "math", percent: 65, color: "#78e08f" },
+          { name: "physics", percent: 45, color: "#f0932b" },
+          { name: "chemistry", percent: 75, color: "#78e08f" },
+          { name: "general", percent: 85, color: "#78e08f" },
+        ];
+
+        subjects.forEach((subject) => {
+          // define color o day ne`
+          if (subject.percent < 25) {
+            subject.color = "#eb4d4b";
+          } else if (subject.percent < 50) {
+            subject.color = "#f0932b";
+          } else if (subject.percent < 75) {
+            subject.color = "#f9ca24";
+          } else {
+            subject.color = "#78e08f";
+          }
+          let container = document.querySelector(
+            `.circular-progress-bar--${subject.name}`
+          );
+          container.innerHTML += `
+        <div class="progess-group">
+        <div class="circular-progress" >
+          <span class="subject-value">0%</span>
+        </div>
+      </div>
+        `;
+        });
+
+        //style="  background: conic-gradient(${subject.color} ${3.6 * subject.percent}deg, #fff 0deg);"
+
+        const progressGroups = document.querySelectorAll(".progess-group");
+
+        progressGroups.forEach((progress, index) => {
+          let progressStartValue = 0;
+          let progressStartEnd = subjects[index].percent;
+          let speed = 10;
+          let progessTimer = setInterval(() => {
+            progressStartValue++;
+            if (progressStartValue == progressStartEnd) {
+              clearInterval(progessTimer);
+            }
+            progress.querySelector(".circular-progress").style.background = `
+          conic-gradient(${subjects[index].color} ${
+              3.6 * progressStartValue
+            }deg, #fff 0deg)`;
+
+            progress.querySelector(".subject-value").innerHTML =
+              progressStartValue + "%";
+          }, speed);
+        });
+
+        // Initialize chart--general
+        const ctx = document.getElementById("generalChart").getContext("2d");
+
+        // TODO: ASSIGN DATA
+        // row
+        const labels = ["1", "2", "3", "4", "5", "6", "7"];
+        // data theo tung` thang
+        const data = [80, 40, 100, 90, 60, 70, 80];
+        const generalChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Mức độ hoàn thành",
+                data: data,
+                fill: false,
+                borderColor: "rgb(255, 61, 0)",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
